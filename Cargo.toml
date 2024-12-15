@@ -1,0 +1,23 @@
+[package]
+name = "microsoft_mail"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Microsoft Mail api"
+
+[dependencies]
+kurtbuilds_file = "0.1.1"
+futures = "0.3.31"
+base64 = "0.22.1"
+chrono = { version = "0.4.39", features = ["serde"] }
+html-escape = "0.2.13"
+httpclient = "0.23.21"
+httpclient_oauth2 = "0.4.0"
+kurtbuilds_email = "0.1.0"
+kurtbuilds_std_ext = "0.1.11"
+serde = { version = "1.0.216", features = ["derive"] }
+uuid = { version = "1.11.0", features = ["serde"] }
+serde_json = "1.0.133"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
