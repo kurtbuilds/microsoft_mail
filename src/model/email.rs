@@ -1,6 +1,7 @@
-use crate::model::{Body, Recipient};
+use crate::model::{Body, BodyType, Recipient};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use std_ext::VecExt;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Flag {
@@ -44,4 +45,23 @@ pub struct EmailMessage {
     pub sent_date_time: DateTime<Utc>,
     pub subject: String,
     pub web_link: String,
+}
+
+impl Into<::email::Email> for EmailMessage {
+    fn into(self) -> ::email::Email {
+        ::email::Email {
+            from: self.from.map(|c| c.into()).unwrap(),
+            to: self.to_recipients.recollect(),
+            cc: self.cc_recipients.recollect(),
+            bcc: self.bcc_recipients.recollect(),
+            subject: self.subject,
+            body: match self.body.content_type {
+                BodyType::Text => ::email::Body::Text(self.body.content),
+                BodyType::Html => ::email::Body::Html(self.body.content),
+            },
+            attachments: Vec::new(),
+            reply_to_message_id: None,
+            thread_id: None,
+        }
+    }
 }

@@ -20,7 +20,6 @@ pub fn default_http_client() -> httpclient::Client {
     httpclient::Client::new()
         .no_default_headers()
         .base_url("https://graph.microsoft.com/v1.0")
-        .with_middleware(httpclient::Logger)
 }
 
 pub fn shared_oauth2_flow() -> &'static httpclient_oauth2::OAuth2Flow {
